@@ -1,0 +1,10 @@
+*.iml
+.gradle
+app_00002_lights_demo/local.properties
+app_00002_lights_demo/.idea/libraries
+app_00002_lights_demo/.idea/modules.xml
+app_00002_lights_demo/.idea/workspace.xml
+.DS_Store
+app_00002_lights_demo/build
+app_00002_lights_demo/captures
+.externalNativeBuild
