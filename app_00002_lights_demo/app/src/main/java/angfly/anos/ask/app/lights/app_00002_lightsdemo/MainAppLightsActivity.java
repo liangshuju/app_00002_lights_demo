@@ -52,6 +52,9 @@ public class MainAppLightsActivity extends Activity {
         setContentView(R.layout.activity_main_app_lights);
 
         mLightButton = (Button) findViewById(R.id.button_flash);
+
+        //mLightHandler.postDelayed(mLightRunnable, 2000);
+
         mLightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +65,9 @@ public class MainAppLightsActivity extends Activity {
                     mLightButton.setText("Flashing Light at 20s");
                 }
 
+                mLightHandler.postDelayed(mLightRunnable, 20000);
             }
         });
     }
+
 }
