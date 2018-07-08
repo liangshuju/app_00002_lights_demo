@@ -5,8 +5,12 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+
+import java.util.Set;
 
 public class MainAppLightsActivity extends Activity {
 
@@ -19,6 +23,8 @@ public class MainAppLightsActivity extends Activity {
     private Handler mLightHandler = new Handler();
 
     private LightRunnable mLightRunnable = new LightRunnable();
+
+    private SeekBar mLcdBackLightsSeekBar = null;
 
     class LightRunnable implements Runnable {
         @Override
@@ -52,9 +58,45 @@ public class MainAppLightsActivity extends Activity {
         setContentView(R.layout.activity_main_app_lights);
 
         mLightButton = (Button) findViewById(R.id.button_flash);
+        mLcdBackLightsSeekBar = findViewById(R.id.id_seekBar_lcd_backlights);
 
-        //mLightHandler.postDelayed(mLightRunnable, 2000);
+        touchBackLightsSeekBar();
+        setLedFlash();
+    }
 
+    private void touchBackLightsSeekBar() {
+        try {
+            // 关闭自动调整背光的功能
+            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE,
+                Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+
+            // 根据系统背光值，设置滑动块的值
+            int mBackLights = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
+            mLcdBackLightsSeekBar.setProgress(mBackLights*255/100);
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        mLcdBackLightsSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int backlights = mLcdBackLightsSeekBar.getProgress();
+                Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, backlights*255/100);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    private void setLedFlash() {
         mLightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

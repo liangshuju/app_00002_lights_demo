@@ -4,12 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainAppLightsActivity">
+    tools:context=".MainAppLightsActivity"
+    android:orientation="vertical">
 
     <Button
         android:id="@+id/button_flash"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Flashing Lights at 20s"/>
+
+    <SeekBar
+        android:id="@+id/id_seekBar_lcd_backlights"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:contextClickable="true"
+        android:max="100"
+        android:progress="50"
+        />
 
 </LinearLayout>
